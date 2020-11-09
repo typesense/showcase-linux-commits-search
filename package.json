@@ -8,7 +8,7 @@
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "typesenseServer": "docker run -i -p 8108:8108 -v/tmp/typesense-server-data/:/data typesense/typesense:0.15.0 --data-dir /data --api-key=xyz --listen-port 8108 --enable-cors",
-    "populateTypesenseIndex": "node populateTypesenseIndex.js"
+    "populateTypesenseIndex": "node scripts/populateTypesenseIndex.js"
   },
   "devDependencies": {
     "babel-eslint": "10.0.3",
@@ -21,7 +21,7 @@
     "prettier": "1.19.1"
   },
   "dependencies": {
-    "git-parse": "^1.0.4",
+    "gitlog": "^4.0.0",
     "typesense-instantsearch-adapter": "^0.3.0"
   }
 }

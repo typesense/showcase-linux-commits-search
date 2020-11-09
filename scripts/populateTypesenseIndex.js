@@ -1,13 +1,14 @@
 /* eslint-disable */
 
 // Start Typesense server with `npm run typesenseServer`
-// Then run `npm run populateTypesenseIndex` or `node populateTypesenseIndex.js`
+// Then run `yarn run populateTypesenseIndex` or `node populateTypesenseIndex.js`
 
 const Typesense = require('typesense');
-const { gitParse } = require('git-parse');
-const commitsPromise = gitParse('path/to/repo/');
+const gitlog = require("gitlog").default;
+const INDEX_NAME = 'linux_commit_history';
+const REPO_PATH = 'data/linux';
 
-commitsPromise.then(commits => console.log(JSON.stringify(commits, null, 2)));
+
 module.exports = (async () => {
   const typesense = new Typesense.Client({
     nodes: [
@@ -21,27 +22,22 @@ module.exports = (async () => {
   });
 
   const schema = {
-    name: 'books',
+    name: INDEX_NAME,
     fields: [
-      { name: 'title', type: 'string' },
-      { name: 'authors', type: 'string[]' },
-      { name: 'image_url', type: 'string' },
-
-      { name: 'publication_year', type: 'int32' },
-      { name: 'ratings_count', type: 'int32' },
-      { name: 'average_rating', type: 'float' },
-
-      { name: 'authors_facet', type: 'string[]', facet: true },
-      { name: 'publication_year_facet', type: 'string', facet: true },
+      { name: 'hash', type: 'string' },
+      { name: 'author_name', type: 'string', facet: true },
+      { name: 'author_email', type: 'string' },
+      { name: 'commit_timestamp', type: 'int32', facet: true },
+      { name: 'commit_message', type: 'string' },
     ],
-    default_sorting_field: 'ratings_count',
+    default_sorting_field: 'commit_timestamp',
   };
 
   console.log('Populating index in Typesense');
 
   try {
-    await typesense.collections('books').delete();
-    console.log('Deleting existing collection: books');
+    console.log(`Deleting existing collection: ${INDEX_NAME}`);
+    await typesense.collections(INDEX_NAME).delete();
   } catch (error) {
     // Do nothing
   }
@@ -51,24 +47,28 @@ module.exports = (async () => {
   await typesense.collections().create(schema);
 
   console.log('Adding records: ');
-  const books = require('./data/books.json');
-  try {
-    const returnData = await typesense
-      .collections('books')
-      .documents()
-      .createMany(books);
-    console.log(returnData);
-    console.log('Done indexing.');
 
-    const failedItems = returnData.filter(item => item.success === false);
-    if (failedItems.length > 0) {
-      throw new Error(
-        `Error indexing items ${JSON.stringify(failedItems, null, 2)}`,
-      );
+  const commits = await gitToJs(REPO_PATH);
+  const results = commits.forEach(async (fullCommit) => {
+    try {
+      commit = {
+        hash: fullCommit['hash'],
+        author_name: fullCommit['authorName'],
+        author_email: fullCommit['authorEmail'],
+        commit_timestamp: Math.round(new Date(fullCommit['date']).getTime() / 1000),
+        commit_message: fullCommit['message'],
+      };
+
+      const returnData = await typesense
+        .collections(INDEX_NAME)
+        .documents().create(commit);
+
+      console.log(returnData);
+      return returnData;
+    } catch (error) {
+      console.error(error);
+      return Promise.reject(error);
     }
-
-    return returnData;
-  } catch (error) {
-    console.log(error);
-  }
+  });
+  console.log(results);
 })();

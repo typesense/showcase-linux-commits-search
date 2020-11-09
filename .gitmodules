@@ -1,0 +1,6 @@
+[submodule "data/linux"]
+	path = data/linux
+	url = https://github.com/torvalds/linux.git
+[submodule "data/gitlogg"]
+	path = data/gitlogg
+	url = https://github.com/dreamyguy/gitlogg
