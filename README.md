@@ -32,7 +32,7 @@ git log --shortstat --pretty=format:'---tsgitlogseparator---'"${PWD##*/}"'---tsg
 Create .env file using .env.example as sample
 
 ```shell
-bundle
-bundle exec ruby scripts/tranforms_git_log.rb
-bundle exec ruby scripts/index.rb
+bundle install
+yarn transformDataset
+yarn index
 ```
