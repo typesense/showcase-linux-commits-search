@@ -22,15 +22,17 @@ Open http://localhost:3000 to see your app.
 
 ## Extracting commit history
 
-Make output a JSONL file:
-
+```shell
+git submodule init
+git submodule update
+cd data/linux
+git log --shortstat --pretty=format:'---tsgitlogseparator---'"${PWD##*/}"'---tsgitlogseparator---%H---tsgitlogseparator---%aN---tsgitlogseparator---%aE---tsgitlogseparator---%at---tsgitlogseparator---%cN---tsgitlogseparator---%cE---tsgitlogseparator---%ct---tsgitlogseparator---%D---tsgitlogseparator---%s---tsgitlogseparator---%b---tsgitlogseparator---' > ../../data/git-log-output
 ```
-# Remove commas at the end of each line
-gsed -i 's/,$//g' gitlogg.json
 
-# Remove first and last lines (which contain [ and ])
-gsed -i '1d; $d' gitlogg.json
+Create .env file using .env.example as sample
 
-# Remove extra spaces
-gsed -i 's/^ *//g' gitlogg.json
+```shell
+bundle
+bundle exec ruby scripts/tranforms_git_log.rb
+bundle exec ruby scripts/index.rb
 ```
