@@ -60,6 +60,11 @@ else
         'name' => 'author_timestamp',
         'type' => 'int64',
         'optional' => true,
+      },
+      {
+        'name' => 'author_timestamp_year',
+        'type' => 'int64',
+        'optional' => true,
         'facet' => true
       },
       {
@@ -77,6 +82,12 @@ else
       {
         'name' => 'committer_timestamp',
         'type' => 'int64',
+        'facet' => true
+      },
+      {
+        'name' => 'committer_timestamp_year',
+        'type' => 'int64',
+        'optional' => true,
         'facet' => true
       },
       {
