@@ -177,28 +177,32 @@ search.addWidgets([
   infiniteHits({
     container: '#hits',
     cssClasses: {
-      list: 'list-unstyled grid-container',
-      item: 'd-flex flex-column search-result-card bg-light-2 p-3',
+      list: 'list-unstyled',
+      item: 'd-flex flex-column search-result-card p-4 border border-dark mb-3',
       loadMore: 'btn btn-primary mx-auto d-block mt-4',
     },
     templates: {
-      item: `
-            <h6 class="text-primary font-weight-light font-letter-spacing-loose mb-0">
-              {{#helpers.highlight}}{ "attribute": "subject" }{{/helpers.highlight}}
+      item: (data) => {
+        return `
+            <h6 class="text-primary mb-4">
+              ${data._highlightResult.subject.value}
             </h6>
+
             <div>
-              {{#helpers.highlight}}{ "attribute": "body" }{{/helpers.highlight}}
+              ${data._highlightResult.body.value.split('\n').join('<br/>')}
             </div>
-            <div class="text-muted small mb-2">
-              {{ author_timestamp_year }}
+
+            <div class="text-muted small mb-2 text-right">
+              ${data.author_date}
             </div>
 
             <div class="mt-auto text-right">
-              {{#urls}}
-              <a href="https://github.com/{{ repo }}/master/{{ sha }}" target="_blank" class="ml-1">Link</a>
-              {{/urls}}
+              <a href="https://github.com/torvalds/${data.repo}/commit/${
+          data.sha
+        }" target="_blank" class="ml-1">Diff</a>
             </div>
-        `,
+        `;
+      },
       empty:
         'No commits found for <q>{{ query }}</q>. Try another search term.',
     },
@@ -206,12 +210,9 @@ search.addWidgets([
       return items.map((item) => {
         return {
           ...item,
-          release_date_display: (() => {
-            const parsedDate = new Date(item.release_date * 1000);
-            return `${parsedDate.getUTCFullYear()}/${(
-              '0' +
-              (parsedDate.getUTCMonth() + 1)
-            ).slice(-2)}`;
+          author_date: (() => {
+            const parsedDate = new Date(item.author_timestamp_year * 1000);
+            return parsedDate.toISOString();
           })(),
         };
       });

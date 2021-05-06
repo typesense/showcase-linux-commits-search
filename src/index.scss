@@ -3,7 +3,6 @@
 
 .search-result-card {
   min-height: 100px;
-  font-size: 12px;
 
   @media (min-width: 768px) {
     min-height: 175px;
@@ -21,18 +20,6 @@ a.clickable-search-term {
   text-decoration-line: underline;
   text-decoration-color: darken($secondary, 40%);
   cursor: pointer;
-}
-
-.grid-container {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  row-gap: 10px;
-
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    column-gap: 20px;
-    row-gap: 20px;
-  }
 }
 
 mark {
