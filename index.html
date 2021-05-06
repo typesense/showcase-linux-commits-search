@@ -14,13 +14,14 @@
   <title>Linux Kernel Commit History Search with Typesense</title>
   <meta name="description"
         content="Linux Kernel Commit History Search with Typesense">
-  <meta name="keywords" content="linux, git commit history, search, search engine, typesense, search linux kernel"/>
+  <meta name="keywords" content="linux, git commit history, search, search engine, typesense, search linux kernel" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://linux-commits-search.typesense.org">
   <meta property="og:title" content="Instantly Search Linux Kernel Commit History with Typesense">
-  <meta name="og:description" content="Search through commits from the Linux kernal git repository instantly with Typesense"/>
+  <meta name="og:description"
+        content="Search through commits from the Linux kernal git repository instantly with Typesense" />
   <meta property="og:image" content="./images/opengraph_banner.png">
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -39,66 +40,59 @@
 </head>
 
 <body>
-<div class="container">
-  <div class="row mt-3 ">
-    <div class="col-md">
-      <header>
-        <div class="row">
-          <div class="col-md">
-            <h1 class="text-md-center font-serif">
-              Instantly Search 1 Million Commits from the Linux Kernel git repo
-            </h1>
-            <h5 class="text-md-center mt-3 font-weight-light">
-              <div class="d-md-inline d-block mt-3">
-                <span style="vertical-align: text-bottom;">powered by</span>
-                <a href="https://typesense.org" target="_blank">
-                  <img src="images/typesense.svg" height="32" alt="Typesense" class="mx-2" style="vertical-align: top; position: relative; top: -4px;"/>
-                </a>
-              </div>
-            </h5>
-            <div class="text-md-center">
-              <a class="github-button" href="https://github.com/typesense/showcase-linux-commits-search" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="normal" aria-label="View typesense/showcase-linux-commits-search on GitHub">View on Github</a>
-            </div>
-          </div>
-        </div>
-      </header>
-    </div>
+<div class="row pt-3 px-3 px-md-5 d-flex align-items-center">
+  <div class="col-md">
+    <h1 class="font-letter-spacing-tight">
+      Search 1 Million Linux Kernel Commit Messages
+    </h1>
+    <p class="text-muted">
+      Find any interesting tidbits? Tweet the commit SHA and message using #LinuxCommitMessage •
+      <a href="#" data-toggle="modal" data-target="#aboutModal">About</a> •
+      <a href="https://github.com/typesense/showcase-linux-commits-search" target="_blank">Source Code</a>
+    </p>
+  </div>
+  <div class="col-md-1">
+    <img src="images/linux_tux.svg" height="120" width="109" alt="Linux Tux" />
   </div>
 </div>
 
-<div class="row mt-2 mt-md-3 no-gutters">
-  <div class="col-md">
-    <div id="searchbox-container" class="bg-secondary pt-3 pt-md-5 pb-2 pb-md-4 px-3 px-md-5">
-      <div class="row justify-content-md-center">
-        <div class="col-md-8">
-          <div id="searchbox"></div>
-          <div class="mt-2">
-            Try:
-            <span id="example-search-terms">
-              <a role="button" class="clickable-search-term">Annie's song Denver</a>,
-              <a role="button" class="clickable-search-term">Wonderwall Oasis</a>,
-              <a role="button" class="clickable-search-term">Mariah Carey</a>,
-              <a role="button" class="clickable-search-term">Soundtrack</a>,
-              <a role="button" class="clickable-search-term">Beethoven</a>,
-              <a role="button" class="clickable-search-term">Poker face Gaga</a>,
-              <a role="button" class="clickable-search-term">Elvis Presley</a>
+<div id="searchbox-container" class="row px-3 px-md-5 mt-md-3">
+  <div class="col-md justify-content-md-center">
+    <div id="searchbox"></div>
+    <div class="row mt-2 text-muted">
+      <div class="col-md">
+        Try:
+        <span id="example-search-terms">
+              <a role="button" class="clickable-search-term">device driver</a>,
+              <a role="button" class="clickable-search-term">usb</a>,
+              <a role="button" class="clickable-search-term">stupid</a>,
+              <a role="button" class="clickable-search-term">bug</a>,
+              <a role="button" class="clickable-search-term">floppy</a>,
+              <a role="button" class="clickable-search-term">desktop</a>
             </span>
-          </div>
+      </div>
+      <div class="col-md-2 text-right">
+        <div>Powered by</div>
+        <div>
+          <a href="https://typesense.org" target="_blank" alt="Typesense">
+          <img src="images/typesense_terminal_white.svg" width="114" height="25"/>
+          </a>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<div id="results-section" class="container">
+<div id="results-section" class="px-5">
 
   <div class="row mt-3">
     <div class="col-md-3">
     </div>
     <div class="col-md">
       <div class="row d-flex justify-content-end">
-        <div id="sort-by" class="col-5 col-md-2 mt-2 mt-md-0"></div>
-        <div id="stats" class="col-md ml-md-2 text-right small order-first order-md-last d-flex align-items-center justify-content-end justify-content-md-start px-md-0"></div>
+        <div id="sort-by" class="col-5 col-md-3 mt-2 mt-md-0"></div>
+        <div id="stats"
+             class="col-md ml-md-2 text-right small order-first order-md-last d-flex align-items-center justify-content-end justify-content-md-start px-md-0"></div>
       </div>
     </div>
   </div>
@@ -106,7 +100,8 @@
   <div class="row mt-3">
     <div class="col-md-3">
       <nav class="navbar navbar-expand-md navbar-light p-0 pb-3">
-        <button class="navbar-toggler text-primary border-light-2" type="button" data-toggle="collapse" data-target="#filters-section"
+        <button class="navbar-toggler text-primary border-light-2" type="button" data-toggle="collapse"
+                data-target="#filters-section"
                 aria-controls="filters-section" aria-expanded="false" aria-label="Toggle filters">
           <span class="navbar-toggler-icon"></span><span class="ml-2" style="font-size: 15px;">Refine</span>
         </button>
@@ -120,32 +115,50 @@
 
           <div class="row">
             <div class="col-md">
-              <h4 class="font-weight-light text-primary">Commit Year</h4>
+              <h6 class="text-secondary">Commit Year</h6>
               <div id="author-timestamp-year-date-selector"></div>
             </div>
           </div>
           <div class="row mt-3">
             <div class="col-md">
-              <h4 class="font-weight-light text-primary">Author Email Domain</h4>
+              <h6 class="text-secondary">Author Email Domain</h6>
               <div id="author-email-domain-refinement-list"></div>
             </div>
           </div>
           <div class="row mt-5">
             <div class="col-md">
-              <h4 class="font-weight-light text-primary">Author Name</h4>
+              <h6 class="text-secondary">Author Name</h6>
               <div id="author-name-refinement-list"></div>
             </div>
           </div>
           <div class="row mt-5">
             <div class="col-md">
-              <h4 class="font-weight-light text-primary">Committer Name</h4>
+              <h6 class="text-secondary">Committer Name</h6>
               <div id="committer-name-refinement-list"></div>
             </div>
           </div>
           <div class="row mt-5">
             <div class="col-md">
-              <h4 class="font-weight-light text-primary">Committer Email Domain</h4>
+              <h6 class="text-secondary">Committer Email Domain</h6>
               <div id="committer-email-domain-refinement-list"></div>
+            </div>
+          </div>
+          <div class="row mt-5">
+            <div class="col-md">
+              <h6 class="text-secondary">Number of Files Changed</h6>
+              <div id="files-changed-range-input"></div>
+            </div>
+          </div>
+          <div class="row mt-5">
+            <div class="col-md">
+              <h6 class="text-secondary">Commit Insertions</h6>
+              <div id="commit-insertions-range-input"></div>
+            </div>
+          </div>
+          <div class="row mt-5">
+            <div class="col-md">
+              <h6 class="text-secondary">Commit Deletions</h6>
+              <div id="commit-deletions-range-input"></div>
             </div>
           </div>
         </div>
@@ -157,16 +170,6 @@
   </div>
 
 </div>
-
-<footer class="navbar fixed-bottom py-0">
-  <div class="container-fluid justify-content-center justify-content-md-end">
-    <span class="navbar-text">
-      <a href="#" aria-roledescription="button" data-toggle="modal" data-target="#aboutModal">
-        <span>about</span>
-      </a>
-    </span>
-  </div>
-</footer>
 
 <!-- About Modal -->
 <div id="aboutModal" class="modal fade" tabindex="-1" aria-labelledby="aboutLabel" aria-hidden="true">
@@ -188,18 +191,23 @@
         </p>
         <p>
           The songs dataset is from <a href="https://musicbrainz.org/" target="_blank">MusicBrainz</a> which is an open
-          music encyclopedia that collects music metadata and makes it available to the public. Please contribute to it if you're able to!
+          music encyclopedia that collects music metadata and makes it available to the public. Please contribute to it
+          if you're able to!
         </p>
         <p>
-          The app was built using the <a href="https://github.com/typesense/typesense-instantsearch-adapter" target="_blank">
-          Typesense Adapter for InstantSearch.js</a> and is hosted on <a href="https://www.digitalocean.com/products/app-platform/" target="_blank">DigitalOcean's App Platform</a>.
+          The app was built using the <a href="https://github.com/typesense/typesense-instantsearch-adapter"
+                                         target="_blank">
+          Typesense Adapter for InstantSearch.js</a> and is hosted on <a
+          href="https://www.digitalocean.com/products/app-platform/" target="_blank">DigitalOcean's App Platform</a>.
         </p>
         <p>
-          The search backend is powered by a geo-distributed 3-node Typesense cluster running on <a href="https://cloud.typesense.org" target="_blank">Typesense Cloud</a>,
+          The search backend is powered by a geo-distributed 3-node Typesense cluster running on <a
+          href="https://cloud.typesense.org" target="_blank">Typesense Cloud</a>,
           with nodes in Oregon, Frankfurt and Mumbai.
         </p>
         <p>
-          Here is the source-code that shows you how to build your own search experience like this one: <a href="https://github.com/typesense/showcase-songs-search" target="_blank">https://github.com/typesense/showcase-songs-search</a>
+          Here is the source-code that shows you how to build your own search experience like this one: <a
+          href="https://github.com/typesense/showcase-songs-search" target="_blank">https://github.com/typesense/showcase-songs-search</a>
         </p>
 
       </div>
@@ -211,8 +219,6 @@
 </div>
 
 
-<script src="./src/app.js"></script>
-<script async defer src="https://buttons.github.io/buttons.js"></script>
-</body>
+<script src="./src/app.js"></script></body>
 
 </html>

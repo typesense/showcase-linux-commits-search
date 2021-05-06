@@ -16,6 +16,7 @@ import {
   menu,
   sortBy,
   currentRefinements,
+  rangeInput,
 } from 'instantsearch.js/es/widgets';
 import TypesenseInstantSearchAdapter from 'typesense-instantsearch-adapter';
 import { SearchClient as TypesenseSearchClient } from 'typesense'; // To get the total number of docs
@@ -94,14 +95,14 @@ let indexSize;
 function queryWithoutStopWords(query) {
   const words = query.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '').split(' ');
   return words
-    .map(word => {
+    .map((word) => {
       if (STOP_WORDS.includes(word.toLowerCase())) {
         return null;
       } else {
         return word;
       }
     })
-    .filter(w => w)
+    .filter((w) => w)
     .join(' ')
     .trim();
 }
@@ -121,7 +122,7 @@ const searchClient = typesenseInstantsearchAdapter.searchClient;
 const search = instantsearch({
   searchClient,
   indexName: INDEX_NAME,
-  routing: true
+  routing: true,
 });
 
 search.addWidgets([
@@ -133,10 +134,11 @@ search.addWidgets([
     autofocus: true,
     cssClasses: {
       input: 'form-control',
+      loadingIcon: 'stroke-primary',
     },
     queryHook(query, search) {
       const modifiedQuery = queryWithoutStopWords(query);
-        search(modifiedQuery);
+      search(modifiedQuery);
     },
   }),
 
@@ -157,16 +159,19 @@ search.addWidgets([
       text: ({ nbHits, hasNoResults, hasOneResult, processingTimeMS }) => {
         let statsText = '';
         if (hasNoResults) {
-          statsText = 'No results';
+          statsText = 'No commits';
         } else if (hasOneResult) {
-          statsText = '1 result';
+          statsText = '1 commit';
         } else {
-          statsText = `${nbHits.toLocaleString()} results`;
+          statsText = `${nbHits.toLocaleString()} commits`;
         }
         return `${statsText} found ${
-          indexSize ? ` - Searched ${indexSize.toLocaleString()} songs` : ''
+          indexSize ? ` - Searched ${indexSize.toLocaleString()} commits` : ''
         } in ${processingTimeMS}ms.`;
       },
+    },
+    cssClasses: {
+      text: 'text-muted',
     },
   }),
   infiniteHits({
@@ -194,10 +199,11 @@ search.addWidgets([
               {{/urls}}
             </div>
         `,
-      empty: 'No songs found for <q>{{ query }}</q>. Try another search term.',
+      empty:
+        'No commits found for <q>{{ query }}</q>. Try another search term.',
     },
-    transformItems: items => {
-      return items.map(item => {
+    transformItems: (items) => {
+      return items.map((item) => {
         return {
           ...item,
           release_date_display: (() => {
@@ -211,21 +217,35 @@ search.addWidgets([
       });
     },
   }),
-  refinementList({
-    container: '#author-name-refinement-list',
-    attribute: 'author_name',
-    searchable: true,
-    searchablePlaceholder: 'Search author name',
-    showMore: true,
+  currentRefinements({
+    container: '#current-refinements',
     cssClasses: {
-      searchableInput: 'form-control form-control-sm mb-2 border-light-2',
-      searchableSubmit: 'd-none',
-      searchableReset: 'd-none',
-      showMore: 'btn btn-secondary btn-sm align-content-center',
       list: 'list-unstyled',
-      count: 'badge badge-light bg-light-2 ml-2',
-      label: 'd-flex align-items-center',
-      checkbox: 'mr-2',
+      label: 'd-none',
+      item: 'h5',
+      category: 'badge badge-light px-3',
+      delete: 'btn btn-sm btn-link text-decoration-none p-0 pl-2',
+    },
+    transformItems: (items) => {
+      const modifiedItems = items.map((item) => {
+        return {
+          ...item,
+          label: '',
+        };
+      });
+      return modifiedItems;
+    },
+  }),
+  menu({
+    container: '#author-timestamp-year-date-selector',
+    attribute: 'author_timestamp_year',
+    sortBy: ['name:desc'],
+    cssClasses: {
+      list: 'list-unstyled',
+      label: 'text-white',
+      link: 'text-decoration-none',
+      count: 'badge text-dark-2 ml-2',
+      selectedItem: 'pl-3',
     },
   }),
   refinementList({
@@ -235,12 +255,31 @@ search.addWidgets([
     searchablePlaceholder: 'Search author email domain',
     showMore: true,
     cssClasses: {
-      searchableInput: 'form-control form-control-sm mb-2 border-light-2',
+      searchableInput:
+        'form-control form-control-sm form-control-secondary mb-2 border-light-2',
       searchableSubmit: 'd-none',
       searchableReset: 'd-none',
       showMore: 'btn btn-secondary btn-sm',
       list: 'list-unstyled',
-      count: 'badge badge-light bg-light-2 ml-2',
+      count: 'badge text-dark-2 ml-2',
+      label: 'd-flex align-items-center',
+      checkbox: 'mr-2',
+    },
+  }),
+  refinementList({
+    container: '#author-name-refinement-list',
+    attribute: 'author_name',
+    searchable: true,
+    searchablePlaceholder: 'Search author name',
+    showMore: true,
+    cssClasses: {
+      searchableInput:
+        'form-control form-control-sm form-control-secondary mb-2 border-light-2',
+      searchableSubmit: 'd-none',
+      searchableReset: 'd-none',
+      showMore: 'btn btn-secondary btn-sm align-content-center',
+      list: 'list-unstyled',
+      count: 'badge text-dark-2 ml-2',
       label: 'd-flex align-items-center',
       checkbox: 'mr-2',
     },
@@ -252,12 +291,13 @@ search.addWidgets([
     searchablePlaceholder: 'Search committer name',
     showMore: true,
     cssClasses: {
-      searchableInput: 'form-control form-control-sm mb-2 border-light-2',
+      searchableInput:
+        'form-control form-control-sm form-control-secondary mb-2 border-light-2',
       searchableSubmit: 'd-none',
       searchableReset: 'd-none',
       showMore: 'btn btn-secondary btn-sm',
       list: 'list-unstyled',
-      count: 'badge badge-light bg-light-2 ml-2',
+      count: 'badge text-dark-2 ml-2',
       label: 'd-flex align-items-center',
       checkbox: 'mr-2',
     },
@@ -269,25 +309,48 @@ search.addWidgets([
     searchablePlaceholder: 'Search committer email domain',
     showMore: true,
     cssClasses: {
-      searchableInput: 'form-control form-control-sm mb-2 border-light-2',
+      searchableInput:
+        'form-control form-control-sm form-control-secondary mb-2 border-light-2',
       searchableSubmit: 'd-none',
       searchableReset: 'd-none',
       showMore: 'btn btn-secondary btn-sm',
       list: 'list-unstyled',
-      count: 'badge badge-light bg-light-2 ml-2',
+      count: 'badge text-dark-2 ml-2',
       label: 'd-flex align-items-center',
       checkbox: 'mr-2',
     },
   }),
-  menu({
-    container: '#author-timestamp-year-date-selector',
-    attribute: 'author_timestamp_year',
-    sortBy: ['name:desc'],
+  rangeInput({
+    container: '#files-changed-range-input',
+    attribute: 'num_files_changed',
     cssClasses: {
-      list: 'list-unstyled',
-      item: 'pl-2 mb-2 text-normal',
-      count: 'badge badge-light bg-light-2 ml-2',
-      selectedItem: 'bg-secondary p-2 pl-3',
+      form: 'form',
+      input: 'form-control form-control-sm form-control-secondary',
+      submit:
+        'btn btn-sm btn-secondary ml-2 border border-secondary border-width-2',
+      separator: 'text-muted mx-2',
+    },
+  }),
+  rangeInput({
+    container: '#commit-insertions-range-input',
+    attribute: 'num_insertions',
+    cssClasses: {
+      form: 'form',
+      input: 'form-control form-control-sm form-control-secondary',
+      submit:
+        'btn btn-sm btn-secondary ml-2 border border-secondary border-width-2',
+      separator: 'text-muted mx-2',
+    },
+  }),
+  rangeInput({
+    container: '#commit-deletions-range-input',
+    attribute: 'num_deletions',
+    cssClasses: {
+      form: 'form',
+      input: 'form-control form-control-sm form-control-secondary',
+      submit:
+        'btn btn-sm btn-secondary ml-2 border border-secondary border-width-2',
+      separator: 'text-muted mx-2',
     },
   }),
   configure({
@@ -297,29 +360,13 @@ search.addWidgets([
     container: '#sort-by',
     items: [
       { label: 'Recent first', value: `${INDEX_NAME}` },
-      { label: 'Oldest first', value: `${INDEX_NAME}/sort/author_timestamp_year:asc` },
+      {
+        label: 'Oldest first',
+        value: `${INDEX_NAME}/sort/author_timestamp_year:asc`,
+      },
     ],
     cssClasses: {
       select: 'custom-select custom-select-sm',
-    },
-  }),
-  currentRefinements({
-    container: '#current-refinements',
-    cssClasses: {
-      list: 'list-unstyled',
-      label: 'd-none',
-      item: 'h5',
-      category: 'badge badge-light bg-light-2 px-3',
-      delete: 'btn btn-sm btn-link p-0 pl-2',
-    },
-    transformItems: items => {
-      const modifiedItems = items.map(item => {
-        return {
-          ...item,
-          label: '',
-        };
-      });
-      return modifiedItems;
     },
   }),
 ]);
@@ -331,14 +378,14 @@ function handleSearchTermClick(event) {
   search.helper.setQuery($searchBox.val()).search();
 }
 
-search.on('render', function() {
+search.on('render', function () {
   // Make artist names clickable
   $('#hits .clickable-search-term').on('click', handleSearchTermClick);
 });
 
 search.start();
 
-$(function() {
+$(function () {
   const $searchBox = $('#searchbox input[type=search]');
   // Set initial search term
   // if ($searchBox.val().trim() === '') {
@@ -350,7 +397,7 @@ $(function() {
   $('.clickable-search-term').on('click', handleSearchTermClick);
 
   // Clear refinements, when searching
-  $searchBox.on('keydown', event => {
+  $searchBox.on('keydown', (event) => {
     search.helper.clearRefinements();
   });
 

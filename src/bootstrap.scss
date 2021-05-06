@@ -1,38 +1,54 @@
-@import url('https://fonts.googleapis.com/css2?family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap');
 
-$primary: #A30015;
-$secondary: #F8EECE;
-$gray-100: #fcfbfb !default;
-$gray-200: #faf9f8 !default;
-$gray-300: #f8f7f5 !default;
-$gray-400: #f5f3f1 !default;
-$gray-500: #dddbd9 !default;
-$gray-600: #c4c2c1 !default;
-$gray-700: #acaaa9 !default;
-$gray-800: #7b7a79 !default;
-$gray-900: #494948 !default;
-$black:    #020202 !default;
+$primary: #55DE5C;
+$secondary: #C7C402;
+$gray-100: #e8e8e8;
+$gray-200: #d1d1d1;
+$gray-300: #bbbbbb;
+$gray-400: #a4a4a4;
+$gray-500: #8D8D8D;
+$gray-600: #717171;
+$gray-700: #555555;
+$gray-800: #383838;
+$gray-900: #1c1c1c;
+$black: #030303;
+$white: #E8E8E8;
 
-$text-muted: $gray-700;
+$text-muted: $gray-500;
+
+$body-bg: $black;
+$body-color: $white;
+
+$link-decoration: underline;
+$link-color: $gray-500;
+
+$input-font-weight: 400;
+$input-color: $primary;
+$input-bg: $black;
+$input-border-color: $primary;
+$input-focus-border-color: darken($primary, 5%);
+$input-btn-focus-box-shadow:  0 0 15px 0.2em rgba($input-focus-border-color, 0.25);
 
 $component-active-bg: $secondary;
-
-$input-color: $primary;
-$custom-select-bg: $gray-300;
+$custom-select-color: $gray-300;
+$custom-select-bg: $gray-900;
+$custom-select-border-width: 0;
+$input-btn-padding-x-sm: 0.9rem;
+$input-btn-padding-y-sm: 0.4rem;
 
 $input-padding-x: 1.3rem;
 $input-padding-y: .8rem;
 
-$font-family-sans-serif: 'Istok Web', sans-serif;
+$font-family-sans-serif: 'Fira Mono', monospace;
 $font-size-base: 0.9rem;
 $input-font-size: 1.4rem;
 
-$input-font-weight: 500;
-$headings-font-weight: 900;
-$display1-weight: 500;
-$display2-weight: 500;
-$display3-weight: 500;
-$display4-weight: 500;
+$input-font-weight: 400;
+$headings-font-weight: 400;
+$display1-weight: 400;
+$display2-weight: 400;
+$display3-weight: 400;
+$display4-weight: 400;
 
 $border-radius: 0px;
 
@@ -46,32 +62,42 @@ $enable-responsive-font-sizes: true;
 
 @import "~bootstrap/scss/bootstrap";
 
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6,
-.display-1, .display-2, .display-3, .display-4 {
+.font-letter-spacing-tight {
   letter-spacing: -0.05rem;
 }
 
-input {
-  letter-spacing: -0.05rem;
+input[type=search] {
+  letter-spacing: -0.05em;
 }
 
-.font-serif {
-  font-family: 'Lora', serif;
+a {
+  text-decoration: underline !important;
 }
 
-.font-letter-spacing-loose {
-  letter-spacing: 0.01rem;
+.form-control-secondary {
+  color: $secondary;
+  border-color: $secondary;
+
+  &:focus {
+    color: $secondary;
+    border-color: $secondary;
+    box-shadow: 0 0 15px 0.2em rgba($secondary, 0.35);
+  }
 }
 
-.border-light-2 {
-  border-color: $gray-500;
-}
-
-.bg-light-2 {
-  background-color: $gray-400;
+.text-dark-2 {
+  color: $gray-700;
 }
 
 .navbar-toggler-icon {
   background-size: 75% 75%;
+}
+
+// For loading indicator svg
+.stroke-primary {
+  stroke: $primary;
+}
+
+.border-width-2 {
+  border-width: 2px;
 }
