@@ -29,9 +29,9 @@ File.open(OUTPUT_FILE, 'w') do |output_file|
 
       current_record_components = current_record.encode('UTF-8', invalid: :replace).split(FIELD_SEPARATOR)
 
-      num_files_changed = (current_record_components[12].match(/(\d)* files? changed/) || [])[1] || 0
-      num_insertions = (current_record_components[12].match(/(\d)* insertions?/) || [])[1] || 0
-      num_deletions = (current_record_components[12].match(/(\d)* deletions?/) || [])[1] || 0
+      num_files_changed = (current_record_components[12].match(/(\d*) files? changed/) || [])[1] || 0
+      num_insertions = (current_record_components[12].match(/(\d*) insertions?/) || [])[1] || 0
+      num_deletions = (current_record_components[12].match(/(\d*) deletions?/) || [])[1] || 0
 
       current_record_object = {
         repo: current_record_components[1],
