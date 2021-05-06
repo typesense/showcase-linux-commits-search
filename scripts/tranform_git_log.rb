@@ -9,7 +9,7 @@ require 'date'
 MAX_RECORDS = (ENV['MAX_RECORDS'] || 2_000_000).to_i
 DATA_FILE = ENV['DATA_FILE'] || './data/git-log-output.gz'
 OUTPUT_FILE = ENV['OUTPUT_FILE'] || './data/transformed_dataset.json'
-REPO_NAME = ENV['REPO_NAME'] || 'linux'
+REPO_NAME = ENV['REPO_NAME'] || 'torvalds/linux'
 FIELD_SEPARATOR = '---tsgitlogseparator---'
 
 puts 'Processing gitlog output...'

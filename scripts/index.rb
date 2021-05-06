@@ -41,8 +41,10 @@ else
     'name' => COLLECTION_NAME,
     'fields' => [
       {
-        'name' => 'repo',
-        'type' => 'string'
+        'name' => 'sha',
+        'type' => 'string',
+        'optional' => true,
+        'facet' => true
       },
       {
         'name' => 'author_name',
