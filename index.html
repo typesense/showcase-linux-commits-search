@@ -178,7 +178,7 @@
 <!-- About Modal -->
 <div id="aboutModal" class="modal fade" tabindex="-1" aria-labelledby="aboutLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
-    <div class="modal-content">
+    <div class="modal-content text-dark">
       <div class="modal-header">
         <h5 class="modal-title font-weight-normal" id="aboutLabel">
           About
@@ -189,31 +189,37 @@
       </div>
       <div class="modal-body">
         <p>
-          This search experience is powered by <a href="https://typesense.org" target="_blank">Typesense</a> which is
-          a blazing-fast, <a href="https://github.com/typesense/typesense" target="_blank">open source</a> typo-tolerant
-          search-engine. It is an open source alternative to Algolia and an easier-to-use alternative to ElasticSearch.
+          The <a href="https://github.com/torvalds/linux">Linux Kernel</a> we all know and use, recently crossed 1
+          Million commits, after they switched to using git for a version control system. 🎉
         </p>
         <p>
-          The songs dataset is from <a href="https://musicbrainz.org/" target="_blank">MusicBrainz</a> which is an open
-          music encyclopedia that collects music metadata and makes it available to the public. Please contribute to it
-          if you're able to!
+          This site was built by the <a href="https://typesense.org">Typesense</a> team as a tribute to all the hard
+          work that went into building a piece of software that powers a good chunk of the world today.
+          Thank you Linux Kernel Team! 🙏🏻🍻
         </p>
         <p>
-          The app was built using the <a href="https://github.com/typesense/typesense-instantsearch-adapter"
-                                         target="_blank">
-          Typesense Adapter for InstantSearch.js</a> and is hosted on <a
-          href="https://www.digitalocean.com/products/app-platform/" target="_blank">DigitalOcean's App Platform</a>.
-        </p>
-        <p>
-          The search backend is powered by a geo-distributed 3-node Typesense cluster running on <a
-          href="https://cloud.typesense.org" target="_blank">Typesense Cloud</a>,
-          with nodes in Oregon, Frankfurt and Mumbai.
-        </p>
-        <p>
-          Here is the source-code that shows you how to build your own search experience like this one: <a
-          href="https://github.com/typesense/showcase-songs-search" target="_blank">https://github.com/typesense/showcase-songs-search</a>
-        </p>
-
+          Some technical details:</p>
+        <ul>
+          <li>The search experience is powered by <a href="https://typesense.org" target="_blank">Typesense</a> which is
+            a fast, <a href="https://github.com/typesense/typesense" target="_blank">open source</a> typo-tolerant
+            search-engine. It is an open source alternative to Algolia and an easier-to-use alternative to
+            ElasticSearch.
+          </li>
+          <li>
+            The app was built using the <a href="https://github.com/typesense/typesense-instantsearch-adapter"
+                                           target="_blank">
+            Typesense Adapter for InstantSearch.js</a> and is hosted on AWS S3 with Cloudfront for a CDN.
+          </li>
+          <li>
+            The search backend is powered by a geo-distributed 3-node Typesense cluster running on <a
+            href="https://cloud.typesense.org" target="_blank">Typesense Cloud</a>,
+            with nodes in Oregon, Frankfurt and Mumbai.
+          </li>
+          <li>
+            Here is the source-code for this site: <a
+            href="https://github.com/typesense/showcase-linux-commits-search" target="_blank">https://github.com/typesense/showcase-linux-commits-search</a>
+          </li>
+        </ul>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
