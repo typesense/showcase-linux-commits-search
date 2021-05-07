@@ -40,6 +40,13 @@
 </head>
 
 <body>
+<div class="bg-dark text-center py-1">
+  Celebrating Linux's 30th Anniversary & 1 Million Linux Kernel Commits! 🎉
+  <a role="button" data-toggle="modal" data-target="#aboutModal" class="small">
+    Learn More
+  </a>
+</div>
+
 <div class="container-fluid px-md-5 pt-4">
   <div class="row d-flex align-items-center">
     <div class="col-md">
@@ -49,7 +56,7 @@
       <p class="text-muted">
         Find any interesting search queries?
         <a role="button" onclick="window.tweetSearchTerm(); event.preventDefault();" class="text-secondary">Tweet</a>
-        it with #LinuxCommitMessages and we'll add it below •
+        it with #TuxTurns30 #LinuxCommitMessages and we'll add it below •
         <a role="button" data-toggle="modal" data-target="#aboutModal">About</a> •
         <a href="https://github.com/typesense/showcase-linux-commits-search" target="_blank">Source Code</a>
       </p>
@@ -64,14 +71,16 @@
       <div id="searchbox"></div>
       <div class="row mt-2 text-muted">
         <div class="col-md">
-          Try:
+          Interesting finds:
           <span id="example-search-terms">
-              <a role="button" class="clickable-search-term">device driver</a>,
-              <a role="button" class="clickable-search-term">usb</a>,
-              <a role="button" class="clickable-search-term">stupid</a>,
-              <a role="button" class="clickable-search-term">bug</a>,
+              <a role="button" class="clickable-search-term">noise</a>,
+              <a role="button" class="clickable-search-term">cheese</a>,
               <a role="button" class="clickable-search-term">floppy</a>,
-              <a role="button" class="clickable-search-term">desktop</a>,
+              <a role="button" class="clickable-search-term">stupid</a>,
+              <a role="button" class="clickable-search-term">urgent</a>,
+              <a role="button" class="clickable-search-term">postgresql</a>,
+              <a role="button" class="clickable-search-term">GUI</a>,
+              <a role="button" class="clickable-search-term">bug</a>,
               <a role="button" class="clickable-search-term">race condition</a>
             </span>
         </div>
@@ -189,8 +198,9 @@
       </div>
       <div class="modal-body">
         <p>
-          The <a href="https://github.com/torvalds/linux">Linux Kernel</a> we all know and use, recently crossed 1
-          Million commits, after they switched to using git for a version control system. 🎉
+          The <a href="https://github.com/torvalds/linux">Linux Kernel</a> we all know and use, <a
+          href="https://www.linuxfoundation.org/en/linux30th/" target="_blank">turned 30 years</a> in 2021
+          and also recently crossed 1 Million commits, after switching to git for a version control system. 🎉
         </p>
         <p>
           This site was built by the <a href="https://typesense.org">Typesense</a> team as a tribute to all the hard
@@ -220,6 +230,11 @@
             href="https://github.com/typesense/showcase-linux-commits-search" target="_blank">https://github.com/typesense/showcase-linux-commits-search</a>
           </li>
         </ul>
+        <p>
+          We're sure there some interesting nuggets buried in the commit messages. If you find something interesting,
+          <a role="button" onclick="window.tweetSearchTerm(); event.preventDefault();">Tweet</a>
+          it with #TuxTurns30 #LinuxCommitMessages and we'll add it to the list on the site.
+        </p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>

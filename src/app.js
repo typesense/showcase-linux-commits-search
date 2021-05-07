@@ -202,22 +202,20 @@ search.addWidgets([
             <div class="text-muted small">
               Authored by ${data.author_name} • Committed by ${data.committer_name}
             </div>
-
-            <div class="mt-4" style="overflow-wrap: break-word;">
-              ${data.transformedBody}
-            </div>
-
-            <div class="text-muted small mt-4" style="overflow-wrap: break-word;">
-              ${data.sha} • <a href="https://github.com/torvalds/linux/commit/${data.sha}" target="_blank">Diff</a>
+            <div class="text-muted small mt-1" style="overflow-wrap: break-word;">
+              ${data.sha} • <a href="https://github.com/torvalds/linux/commit/${data.sha}" target="_blank">View Diff</a>
             </div>
             <div class="text-muted small mt-1">
               ${data.num_files_changed} file(s) changed,
               ${data.num_insertions} insertion(s),
               ${data.num_deletions} deletion(s)
             </div>
-
-            <div class="text-muted small mt-4">
+            <div class="text-muted small mt-1">
               ${data.author_date}
+            </div>
+
+            <div class="mt-4" style="overflow-wrap: break-word;">
+              ${data.transformedBody}
             </div>
         `;
       },
@@ -416,10 +414,10 @@ search.start();
 $(async function () {
   const $searchBox = $('#searchbox input[type=search]');
   // Set initial search term
-  if ($searchBox.val().trim() === '') {
-    $searchBox.val('device driver');
-    search.helper.setQuery($searchBox.val()).search();
-  }
+  // if ($searchBox.val().trim() === '') {
+  //   $searchBox.val('device driver');
+  //   search.helper.setQuery($searchBox.val()).search();
+  // }
 
   // Handle example search terms
   $('.clickable-search-term').on('click', handleSearchTermClick);
@@ -442,7 +440,7 @@ $(async function () {
 
   window.tweetSearchTerm = function () {
     const currentSearchTerm = $('#searchbox input[type=search]').val().trim();
-    const text = `Found an interesting tidbit searching for "${currentSearchTerm}" in #LinuxCommitMessages via @typesense\n\n${window.location}`;
+    const text = `Found an interesting tidbit searching for "${currentSearchTerm}" in #LinuxCommitMessages via @typesense\n\n${window.location}\n\n#TuxTurns30 #30YearsOfLinux`;
 
     const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
       text
