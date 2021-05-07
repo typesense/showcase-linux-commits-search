@@ -259,7 +259,6 @@ search.addWidgets([
         num_files_changed: 'Files',
       };
       const modifiedItems = items.map((item) => {
-        console.log(item.attribute);
         return {
           ...item,
           label: labelLookup[item.attribute] || '',
@@ -286,6 +285,7 @@ search.addWidgets([
     searchable: true,
     searchablePlaceholder: 'Search author email domain',
     showMore: true,
+    limit: 5,
     cssClasses: {
       searchableInput:
         'form-control form-control-sm form-control-secondary mb-2 border-light-2',
@@ -304,6 +304,7 @@ search.addWidgets([
     searchable: true,
     searchablePlaceholder: 'Search author name',
     showMore: true,
+    limit: 5,
     cssClasses: {
       searchableInput:
         'form-control form-control-sm form-control-secondary mb-2 border-light-2',
@@ -322,6 +323,7 @@ search.addWidgets([
     searchable: true,
     searchablePlaceholder: 'Search committer name',
     showMore: true,
+    limit: 5,
     cssClasses: {
       searchableInput:
         'form-control form-control-sm form-control-secondary mb-2 border-light-2',
@@ -340,6 +342,7 @@ search.addWidgets([
     searchable: true,
     searchablePlaceholder: 'Search committer email domain',
     showMore: true,
+    limit: 5,
     cssClasses: {
       searchableInput:
         'form-control form-control-sm form-control-secondary mb-2 border-light-2',
