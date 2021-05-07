@@ -180,6 +180,7 @@ search.addWidgets([
       list: 'list-unstyled',
       item: 'd-flex flex-column search-result-card p-4 border border-dark mb-3',
       loadMore: 'btn btn-primary mx-auto d-block mt-4',
+      disabledLoadMore: 'btn btn-dark mx-auto d-block mt-4',
     },
     templates: {
       item: (data) => {
@@ -423,9 +424,9 @@ $(async function () {
   $('.clickable-search-term').on('click', handleSearchTermClick);
 
   // Clear refinements, when searching
-  $searchBox.on('keydown', (event) => {
-    search.helper.clearRefinements();
-  });
+  // $searchBox.on('keydown', (event) => {
+  //   search.helper.clearRefinements();
+  // });
 
   if (!matchMedia('(min-width: 768px)').matches) {
     $searchBox.on('focus, keydown', () => {
