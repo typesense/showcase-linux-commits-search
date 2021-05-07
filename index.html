@@ -46,7 +46,9 @@
       Search 1 Million Linux Kernel Commit Messages
     </h1>
     <p class="text-muted">
-      Find any interesting tidbits? Tweet the commit SHA and message using #LinuxCommitMessage •
+      Find any interesting search queries?
+      <a role="button" onclick="window.tweetSearchTerm(); event.preventDefault();">Tweet</a>
+      it with #LinuxCommitMessages and we'll add it below •
       <a href="#" data-toggle="modal" data-target="#aboutModal">About</a> •
       <a href="https://github.com/typesense/showcase-linux-commits-search" target="_blank">Source Code</a>
     </p>
@@ -68,14 +70,15 @@
               <a role="button" class="clickable-search-term">stupid</a>,
               <a role="button" class="clickable-search-term">bug</a>,
               <a role="button" class="clickable-search-term">floppy</a>,
-              <a role="button" class="clickable-search-term">desktop</a>
+              <a role="button" class="clickable-search-term">desktop</a>,
+              <a role="button" class="clickable-search-term">race condition</a>
             </span>
       </div>
       <div class="col-md-2 text-right">
         <div>Powered by</div>
         <div>
           <a href="https://typesense.org" target="_blank" alt="Typesense">
-          <img src="images/typesense_terminal_white.svg" width="114" height="25"/>
+            <img src="images/typesense_terminal_white.svg" width="114" height="25" />
           </a>
         </div>
       </div>
@@ -164,7 +167,7 @@
         </div>
       </nav>
     </div>
-    <div class="col-md">
+    <div class="col-md-9">
       <div id="hits"></div>
     </div>
   </div>
@@ -219,6 +222,7 @@
 </div>
 
 
-<script src="./src/app.js"></script></body>
+<script src="./src/app.js"></script>
+</body>
 
 </html>

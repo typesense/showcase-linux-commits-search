@@ -184,35 +184,58 @@ search.addWidgets([
     templates: {
       item: (data) => {
         return `
-            <h6 class="text-primary mb-4">
-              ${data._highlightResult.subject.value}
-            </h6>
-
-            <div>
-              ${data._highlightResult.body.value.split('\n').join('<br/>')}
+            <div class="row">
+              <div class="col-11">
+                <h6 class="text-primary">
+                  ${data._highlightResult.subject.value}
+                </h6>
+              </div>
+              <div class="col-1 text-right">
+                <a role="button"
+                onclick="window.tweetSearchTerm(); event.preventDefault();"
+                data-commit-message="${data.subject}"
+                data-commit-sha="${data.sha}"
+                class="text-decoration-none"
+                >Tweet</a>
+              </div>
+            </div>
+            <div class="text-muted small">
+              Authored by ${data.author_name} • Committed by ${data.committer_name}
             </div>
 
-            <div class="text-muted small mb-2 text-right">
+            <div class="mt-4">
+              ${data.transformedBody}
+            </div>
+
+            <div class="text-muted small mt-4">
+              ${data.sha} • <a href="https://github.com/torvalds/linux/commit/${data.sha}" target="_blank">Diff</a>
+            </div>
+            <div class="text-muted small mt-1">
+              ${data.num_files_changed} file(s) changed,
+              ${data.num_insertions} insertion(s),
+              ${data.num_deletions} deletion(s)
+            </div>
+
+            <div class="text-muted small mt-4">
               ${data.author_date}
-            </div>
-
-            <div class="mt-auto text-right">
-              <a href="https://github.com/torvalds/${data.repo}/commit/${
-          data.sha
-        }" target="_blank" class="ml-1">Diff</a>
             </div>
         `;
       },
       empty:
         'No commits found for <q>{{ query }}</q>. Try another search term.',
+      showMoreText: 'Show more commits',
     },
     transformItems: (items) => {
       return items.map((item) => {
         return {
           ...item,
+          transformedBody: item._highlightResult.body.value
+            .replaceAll('\n\n', '\n')
+            .split('\n')
+            .join('<br/>'),
           author_date: (() => {
-            const parsedDate = new Date(item.author_timestamp_year * 1000);
-            return parsedDate.toISOString();
+            const parsedDate = new Date(item.author_timestamp * 1000);
+            return parsedDate.toDateString();
           })(),
         };
       });
@@ -355,7 +378,7 @@ search.addWidgets([
     },
   }),
   configure({
-    hitsPerPage: 15,
+    hitsPerPage: 5,
   }),
   sortBy({
     container: '#sort-by',
@@ -379,20 +402,15 @@ function handleSearchTermClick(event) {
   search.helper.setQuery($searchBox.val()).search();
 }
 
-search.on('render', function () {
-  // Make artist names clickable
-  $('#hits .clickable-search-term').on('click', handleSearchTermClick);
-});
-
 search.start();
 
-$(function () {
+$(async function () {
   const $searchBox = $('#searchbox input[type=search]');
   // Set initial search term
-  // if ($searchBox.val().trim() === '') {
-  //   $searchBox.val('Song');
-  //   search.helper.setQuery($searchBox.val()).search();
-  // }
+  if ($searchBox.val().trim() === '') {
+    $searchBox.val('device driver');
+    search.helper.setQuery($searchBox.val()).search();
+  }
 
   // Handle example search terms
   $('.clickable-search-term').on('click', handleSearchTermClick);
@@ -412,4 +430,17 @@ $(function () {
       );
     });
   }
+
+  window.tweetSearchTerm = function () {
+    const currentSearchTerm = $('#searchbox input[type=search]').val().trim();
+    const text = `Found an interesting tidbit searching for "${currentSearchTerm}" in #LinuxCommitMessages via @typesense\n\n${window.location}`;
+
+    const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      text
+    )}`;
+
+    window.location = tweetUrl;
+
+    return false;
+  };
 });

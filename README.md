@@ -26,7 +26,7 @@ Open http://localhost:3000 to see your app.
 mkdir data/linux
 cd data/linux
 git checkout https://github.com/torvalds/linux
-git log --shortstat --pretty=format:'---tsgitlogseparator---'"${PWD##*/}"'---tsgitlogseparator---%H---tsgitlogseparator---%aN---tsgitlogseparator---%aE---tsgitlogseparator---%at---tsgitlogseparator---%cN---tsgitlogseparator---%cE---tsgitlogseparator---%ct---tsgitlogseparator---%D---tsgitlogseparator---%s---tsgitlogseparator---%b---tsgitlogseparator---' > ../../data/git-log-output
+yarn extractCommitHistory
 ```
 
 Create .env file using .env.example as sample
