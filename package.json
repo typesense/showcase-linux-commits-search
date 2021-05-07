@@ -12,7 +12,7 @@
     "index": "bundle exec ruby scripts/index.rb",
     "build": "parcel build index.html --public-url https://linux-commits-search.typesense.org",
     "deploy": "rm -rf build && yarn build && aws s3 cp --recursive ./dist s3://linux-commits-search.typesense.org/ --profile typesense && yarn clearCDNCache",
-    "clearCDNCache": "aws cloudfront create-invalidation --distribution-id TODO --paths \"/*\" --profile typesense"
+    "clearCDNCache": "aws cloudfront create-invalidation --distribution-id E1595BXBL5OB6C --paths \"/*\" --profile typesense"
   },
   "devDependencies": {
     "babel-eslint": "10.1.0",
