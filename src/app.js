@@ -229,7 +229,7 @@ search.addWidgets([
         return {
           ...item,
           transformedBody: item._highlightResult.body.value
-            .replaceAll('\n\n', '\n')
+            .replace(/\n\n/g, '\n')
             .split('\n')
             .join('<br/>'),
           author_date: (() => {
