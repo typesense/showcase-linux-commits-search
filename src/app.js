@@ -130,7 +130,7 @@ search.addWidgets([
     container: '#searchbox',
     showSubmit: false,
     showReset: false,
-    placeholder: 'Type in a song, artist or album name',
+    placeholder: 'Type in a search term... ',
     autofocus: true,
     cssClasses: {
       input: 'form-control',
@@ -159,14 +159,14 @@ search.addWidgets([
       text: ({ nbHits, hasNoResults, hasOneResult, processingTimeMS }) => {
         let statsText = '';
         if (hasNoResults) {
-          statsText = 'No commits';
+          statsText = 'no commits';
         } else if (hasOneResult) {
           statsText = '1 commit';
         } else {
           statsText = `${nbHits.toLocaleString()} commits`;
         }
-        return `${statsText} found ${
-          indexSize ? ` - Searched ${indexSize.toLocaleString()} commits` : ''
+        return `Found ${statsText} ${
+          indexSize ? ` from ${indexSize.toLocaleString()}` : ''
         } in ${processingTimeMS}ms.`;
       },
     },
@@ -186,7 +186,7 @@ search.addWidgets([
         return `
             <div class="row">
               <div class="col-11">
-                <h6 class="text-primary">
+                <h6 class="text-primary" style="overflow-wrap: break-word;">
                   ${data._highlightResult.subject.value}
                 </h6>
               </div>
@@ -203,11 +203,11 @@ search.addWidgets([
               Authored by ${data.author_name} • Committed by ${data.committer_name}
             </div>
 
-            <div class="mt-4">
+            <div class="mt-4" style="overflow-wrap: break-word;">
               ${data.transformedBody}
             </div>
 
-            <div class="text-muted small mt-4">
+            <div class="text-muted small mt-4" style="overflow-wrap: break-word;">
               ${data.sha} • <a href="https://github.com/torvalds/linux/commit/${data.sha}" target="_blank">Diff</a>
             </div>
             <div class="text-muted small mt-1">
@@ -245,16 +245,25 @@ search.addWidgets([
     container: '#current-refinements',
     cssClasses: {
       list: 'list-unstyled',
-      label: 'd-none',
-      item: 'h5',
-      category: 'badge badge-light px-3',
-      delete: 'btn btn-sm btn-link text-decoration-none p-0 pl-2',
+      item: 'h5 badge badge-dark mr-2 px-2',
+      delete: 'btn btn-sm btn-link text-decoration-none p-0 px-2',
     },
     transformItems: (items) => {
+      const labelLookup = {
+        author_email_domain: 'Author',
+        author_name: 'Author',
+        author_timestamp_year: 'Year',
+        committer_email_domain: 'Committer',
+        committer_name: 'Committer',
+        num_insertions: 'Insertions',
+        num_deletions: 'Deletions',
+        num_files_changed: 'Files',
+      };
       const modifiedItems = items.map((item) => {
+        console.log(item.attribute);
         return {
           ...item,
-          label: '',
+          label: labelLookup[item.attribute] || '',
         };
       });
       return modifiedItems;

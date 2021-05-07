@@ -1,6 +1,9 @@
 @import 'bootstrap';
 @import 'app';
 
+body * {
+  //border: 1px solid red;
+}
 .search-result-card {
   min-height: 100px;
 
@@ -36,10 +39,10 @@ mark {
 
 @media (max-width: 1200px) {
   h1, .h1 {
-    font-size: calc(1.2rem + 1.2vw);
+    font-size: calc(1.6rem + 1.2vw);
   }
+}
 
-  h4, .h4 {
-    font-size: calc(1.0rem + 0.12vw);
-  }
+#sort-by {
+  max-width: 185px;
 }
