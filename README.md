@@ -24,9 +24,9 @@ The search backend is powered by a geo-distributed 3-node Typesense cluster runn
 
 ## Development
 
-1. Create .env file using .env.example as sample
+1. Create a `.env` file using `.env.example` as reference.
 
-1. Extracting commit history
+2. Extract commit history
 
   ```shell
   mkdir data/linux
@@ -35,7 +35,7 @@ The search backend is powered by a geo-distributed 3-node Typesense cluster runn
   yarn extractCommitHistory
   ```
 
-1. Transform and index the data
+3. Transform and index the data
   ```shell
   bundle install
   yarn transformDataset
@@ -43,7 +43,7 @@ The search backend is powered by a geo-distributed 3-node Typesense cluster runn
   yarn index
   ```
 
-1. Install dependencies and run the local server:
+4. Install dependencies and run the local server:
 
 ```shell
 yarn
