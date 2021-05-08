@@ -1,6 +1,6 @@
 # Linux Commit History Search
 
-This is a demo that showcases some of Typesense's features using a 1 Million commit messages from the Linux kernel [repo](https://github.com/torvalds/linux).
+This is a demo that showcases some of Typesense's features using 1 Million commit messages from the Linux kernel [repo](https://github.com/torvalds/linux).
 
 View it live here: https://linux-commits-search.typesense.org/
 
