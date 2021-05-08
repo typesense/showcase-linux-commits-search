@@ -191,12 +191,12 @@ search.addWidgets([
                   ${data._highlightResult.subject.value}
                 </h6>
               </div>
-              <div class="col-1 text-right">
+              <div class="col-1 text-right my-2 my-md-0">
                 <a role="button"
                 onclick="window.tweetSearchTerm(); event.preventDefault();"
                 data-commit-message="${data.subject}"
                 data-commit-sha="${data.sha}"
-                class="text-decoration-none"
+                class="text-decoration-none text-white"
                 >Tweet</a>
               </div>
             </div>
@@ -410,6 +410,7 @@ function handleSearchTermClick(event) {
   const $searchBox = $('#searchbox input[type=search]');
   search.helper.clearRefinements();
   $searchBox.val(event.currentTarget.textContent);
+  $searchBox.trigger('change');
   search.helper.setQuery($searchBox.val()).search();
 }
 
@@ -432,7 +433,8 @@ $(async function () {
   // });
 
   if (!matchMedia('(min-width: 768px)').matches) {
-    $searchBox.on('focus, keydown', () => {
+    $searchBox.on('focus keydown change input', () => {
+      console.log('change');
       $('html, body').animate(
         {
           scrollTop: $('#searchbox-container').offset().top,
@@ -444,7 +446,11 @@ $(async function () {
 
   window.tweetSearchTerm = function () {
     const currentSearchTerm = $('#searchbox input[type=search]').val().trim();
-    const text = `Found an interesting tidbit searching for "${currentSearchTerm}" in #LinuxCommitMessages via @typesense\n\n${window.location}\n\n#TuxTurns30 #30YearsOfLinux`;
+    let text = `Found an interesting tidbit searching for "${currentSearchTerm}" in #LinuxCommitMessages via @typesense\n\n${window.location}\n\n#TuxTurns30 #30YearsOfLinux`;
+
+    if (currentSearchTerm === '') {
+      text = `Search for interesting commit messages in the Linux Kernel via @typesense\n\nhttps://linux-commits-search.typesense.org\n\n#TuxTurns30 #30YearsOfLinux #LinuxCommitMessages`;
+    }
 
     const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
       text
