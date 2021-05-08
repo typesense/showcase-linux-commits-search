@@ -115,6 +115,9 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   additionalSearchParameters: {
     queryBy: 'subject,body',
     queryByWeights: '1,1',
+    dropTokensThreshold: 2,
+    typoTokensThreshold: 2,
+    numTypos: 1,
   },
 });
 const searchClient = typesenseInstantsearchAdapter.searchClient;
