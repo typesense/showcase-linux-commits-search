@@ -58,6 +58,11 @@ else
         'facet' => true
       },
       {
+        'name' => 'author_timestamp',
+        'type' => 'int64',
+        'optional' => true,
+      },
+      {
         'name' => 'author_timestamp_year',
         'type' => 'int64',
         'optional' => true,

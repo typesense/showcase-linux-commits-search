@@ -39,9 +39,10 @@ The search backend is powered by a geo-distributed 3-node Typesense cluster runn
 3. Transform and index the data
   ```shell
   bundle install
+  gzip data/git-log-output
   yarn transformDataset
   yarn run typesenseServer
-  yarn index
+  UPDATE_COLLECTION_ALIAS=true yarn index
   ```
 
 4. Install dependencies and run the local server:
