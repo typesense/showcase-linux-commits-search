@@ -41,6 +41,11 @@ else
     'name' => COLLECTION_NAME,
     'fields' => [
       {
+        'name' => 'is_merge',
+        'type' => 'bool',
+        'facet' => true
+      },
+      {
         'name' => 'author_name',
         'type' => 'string',
         'optional' => true,
