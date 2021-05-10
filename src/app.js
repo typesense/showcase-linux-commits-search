@@ -17,6 +17,7 @@ import {
   sortBy,
   currentRefinements,
   rangeInput,
+  toggleRefinement,
 } from 'instantsearch.js/es/widgets';
 import TypesenseInstantSearchAdapter from 'typesense-instantsearch-adapter';
 import { SearchClient as TypesenseSearchClient } from 'typesense'; // To get the total number of docs
@@ -208,7 +209,7 @@ search.addWidgets([
               Authored by ${data.author_name} • Committed by ${data.committer_name}
             </div>
             <div class="text-muted small mt-1" style="overflow-wrap: break-word;">
-              ${data.sha} • <a href="https://github.com/torvalds/linux/commit/${data.sha}" target="_blank">View Diff</a>
+              ${data.id} • <a href="https://github.com/torvalds/linux/commit/${data.sha}" target="_blank">View Diff</a>
             </div>
             <div class="text-muted small mt-1">
               ${data.num_files_changed} file(s) changed,
@@ -261,6 +262,7 @@ search.addWidgets([
         num_insertions: 'Insertions',
         num_deletions: 'Deletions',
         num_files_changed: 'Files',
+        is_merge: 'Merge Commits',
       };
       const modifiedItems = items.map((item) => {
         return {
@@ -281,6 +283,18 @@ search.addWidgets([
       link: 'text-decoration-none',
       count: 'badge text-dark-2 ml-2',
       selectedItem: 'pl-3',
+    },
+  }),
+  toggleRefinement({
+    container: '#exclude-merge-commits-toggle-refinement',
+    attribute: 'is_merge',
+    on: 'false',
+    templates: {
+      labelText: 'Exclude',
+    },
+    cssClasses: {
+      label: 'd-flex align-items-center',
+      checkbox: 'mr-2',
     },
   }),
   refinementList({

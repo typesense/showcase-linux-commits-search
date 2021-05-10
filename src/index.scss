@@ -21,7 +21,9 @@ body * {
 a.clickable-search-term {
   color: unset;
   text-decoration-line: underline;
-  text-decoration-color: darken($secondary, 40%);
+  text-decoration-color: $gray-500;
+  -webkit-text-decoration-line: underline;
+  -webkit-text-decoration-color: $gray-500;
   cursor: pointer;
 }
 
