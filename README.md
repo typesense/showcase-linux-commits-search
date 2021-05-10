@@ -8,7 +8,7 @@ View it live here: https://linux-commits-search.typesense.org/
 
 This search experience is powered by Typesense which is a fast, open source typo-tolerant search-engine. It is an open source alternative to Algolia and an easier-to-use alternative to ElasticSearch.
 
-The dataset was extracted by running `git log` on the Linux Kernel git repo. 
+The dataset was extracted by running `git log` on the Linux Kernel git repo.
 
 The dataset is ~950MB on disk, with ~1 million records. It took 45 minutes to index this dataset on a 3-node Typesense cluster with 4vCPUs per node and the index was ~3GB in RAM.
 
@@ -32,7 +32,8 @@ The search backend is powered by a geo-distributed 3-node Typesense cluster runn
   mkdir data/linux
   cd data/linux
   git checkout https://github.com/torvalds/linux
-  yarn extractCommitHistory
+  yarn extractCommitHistory:merges > data/git-log-output
+  yarn extractCommitHistory:nonMerges >> data/git-log-output
   ```
 
 3. Transform and index the data

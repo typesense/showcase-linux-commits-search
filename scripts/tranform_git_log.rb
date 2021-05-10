@@ -29,24 +29,25 @@ File.open(OUTPUT_FILE, 'w') do |output_file|
 
       current_record_components = current_record.encode('UTF-8', invalid: :replace).split(FIELD_SEPARATOR)
 
-      num_files_changed = (current_record_components[12].match(/(\d*) files? changed/) || [])[1] || 0
-      num_insertions = (current_record_components[12].match(/(\d*) insertions?/) || [])[1] || 0
-      num_deletions = (current_record_components[12].match(/(\d*) deletions?/) || [])[1] || 0
+      num_files_changed = (current_record_components[13].match(/(\d*) files? changed/) || [])[1] || 0
+      num_insertions = (current_record_components[13].match(/(\d*) insertions?/) || [])[1] || 0
+      num_deletions = (current_record_components[13].match(/(\d*) deletions?/) || [])[1] || 0
 
       current_record_object = {
         repo: current_record_components[1],
-        sha: current_record_components[2],
-        author_name: current_record_components[3],
-        author_email_domain: current_record_components[4].gsub(/.+@(.*)/, '\1'),
-        author_timestamp: current_record_components[5].to_i,
-        author_timestamp_year: Time.at(current_record_components[5].to_i).utc.year,
-        committer_name: current_record_components[6],
-        committer_email_domain: current_record_components[7].gsub(/.+@(.*)/, '\1'),
-        committer_timestamp: current_record_components[8].to_i,
-        committer_timestamp_year: Time.at(current_record_components[8].to_i).utc.year,
-        ref_names: current_record_components[9] == '' ? nil : current_record_components[9],
-        subject: current_record_components[10],
-        body: current_record_components[11],
+        id: current_record_components[2],
+        is_merge: current_record_components[3] == "true",
+        author_name: current_record_components[4],
+        author_email_domain: current_record_components[5].gsub(/.+@(.*)/, '\1'),
+        author_timestamp: current_record_components[6].to_i,
+        author_timestamp_year: Time.at(current_record_components[6].to_i).utc.year,
+        committer_name: current_record_components[7],
+        committer_email_domain: current_record_components[8].gsub(/.+@(.*)/, '\1'),
+        committer_timestamp: current_record_components[9].to_i,
+        committer_timestamp_year: Time.at(current_record_components[9].to_i).utc.year,
+        ref_names: current_record_components[10] == '' ? nil : current_record_components[10],
+        subject: current_record_components[11],
+        body: current_record_components[12],
         num_files_changed: num_files_changed.to_i,
         num_insertions: num_insertions.to_i,
         num_deletions: num_deletions.to_i
