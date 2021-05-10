@@ -41,12 +41,6 @@ else
     'name' => COLLECTION_NAME,
     'fields' => [
       {
-        'name' => 'sha',
-        'type' => 'string',
-        'optional' => true,
-        'facet' => true
-      },
-      {
         'name' => 'author_name',
         'type' => 'string',
         'optional' => true,
@@ -57,11 +51,6 @@ else
         'type' => 'string',
         'optional' => true,
         'facet' => true
-      },
-      {
-        'name' => 'author_timestamp',
-        'type' => 'int64',
-        'optional' => true,
       },
       {
         'name' => 'author_timestamp_year',
@@ -78,17 +67,6 @@ else
       {
         'name' => 'committer_email_domain',
         'type' => 'string',
-        'optional' => true,
-        'facet' => true
-      },
-      {
-        'name' => 'committer_timestamp',
-        'type' => 'int64',
-        'facet' => true
-      },
-      {
-        'name' => 'committer_timestamp_year',
-        'type' => 'int64',
         'optional' => true,
         'facet' => true
       },
@@ -121,7 +99,7 @@ else
         'facet' => true
       }
     ],
-    'default_sorting_field' => 'committer_timestamp'
+    'default_sorting_field' => 'author_timestamp'
   }
 
   puts "Populating new collection in Typesense #{COLLECTION_NAME}"
