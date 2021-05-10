@@ -32,8 +32,8 @@ The search backend is powered by a geo-distributed 3-node Typesense cluster runn
   mkdir data/linux
   cd data/linux
   git checkout https://github.com/torvalds/linux
-  yarn extractCommitHistory:merges > data/git-log-output
-  yarn extractCommitHistory:nonMerges >> data/git-log-output
+  yarn extractCommitHistory:merges
+  yarn extractCommitHistory:nonMerges
   ```
 
 3. Transform and index the data
