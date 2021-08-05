@@ -209,7 +209,7 @@ search.addWidgets([
               Authored by ${data.author_name} • Committed by ${data.committer_name}
             </div>
             <div class="text-muted small mt-1" style="overflow-wrap: break-word;">
-              ${data.id} • <a href="https://github.com/torvalds/linux/commit/${data.sha}" target="_blank">View Diff</a>
+              ${data.id} • <a href="https://github.com/torvalds/linux/commit/${data.id}" target="_blank">View Diff</a>
             </div>
             <div class="text-muted small mt-1">
               ${data.num_files_changed} file(s) changed,
