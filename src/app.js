@@ -20,9 +20,9 @@ import {
 import { instantMeiliSearch } from '@meilisearch/instant-meilisearch'
 import 'regenerator-runtime/runtime'
 
-const HOST = process.env.MEILISEARCH_HOST;
-const API_KEY = process.env.MEILISEARCH_API_KEY;
-const INDEX_NAME = process.env.MEILISEARCH_INDEX_NAME;
+const HOST = "https://linux-commit-search.jiangbo.space";
+const API_KEY = "a85af10a2f76ae5bf0991d08358af22ed6fcf79ef994762068e3c25581a01944";
+const INDEX_NAME = "linux";
 
 const search = instantsearch({
   indexName: INDEX_NAME,
