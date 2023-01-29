@@ -11,7 +11,7 @@
     "extractCommitHistory:nonMerges": "cd data/linux && echo \"\" >> ../git-log-output && git log --no-merges --shortstat --pretty=format:'---tsgitlogseparator---torvalds/linux---tsgitlogseparator---%H---tsgitlogseparator---false---tsgitlogseparator---%aN---tsgitlogseparator---%aE---tsgitlogseparator---%at---tsgitlogseparator---%cN---tsgitlogseparator---%cE---tsgitlogseparator---%ct---tsgitlogseparator---%D---tsgitlogseparator---%s---tsgitlogseparator---%b---tsgitlogseparator---' >> ../git-log-output",
     "transformDataset": "bundle exec ruby scripts/tranform_git_log.rb",
     "index": "bundle exec ruby scripts/index.rb",
-    "build": "parcel build index.html --public-url https://linux-commits-search.typesense.org",
+    "build": "parcel build index.html --public-url https://linux-commits-search.jiangbo.space",
     "deploy": "rm -rf build && yarn build && aws s3 cp --recursive ./dist s3://linux-commits-search.typesense.org/ --profile typesense && yarn clearCDNCache",
     "clearCDNCache": "aws cloudfront create-invalidation --distribution-id E1595BXBL5OB6C --paths \"/*\" --profile typesense"
   },
