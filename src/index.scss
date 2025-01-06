@@ -58,3 +58,17 @@ mark {
 .ais-RefinementList-searchBox {
   max-width: 250px;
 }
+
+.text-muted {
+  color: bs.$gray-500 !important;
+}
+small,
+.small {
+  font-size: 80% !important;
+}
+input::placeholder {
+  color: bs.$text-muted !important;
+}
+.navbar-toggler:focus {
+  box-shadow: none !important;
+}

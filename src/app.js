@@ -2,7 +2,6 @@ import jQuery from 'jquery';
 
 window.$ = jQuery; // workaround for https://github.com/parcel-bundler/parcel/issues/333
 
-import 'popper.js';
 import 'bootstrap';
 
 import instantsearch from 'instantsearch.js/es';
@@ -206,7 +205,7 @@ search.addWidgets([
                   ${data._highlightResult.subject.value}
                 </h6>
               </div>
-              <div class="col-1 text-right my-2 my-md-0">
+              <div class="col-1 text-end my-2 my-md-0">
                 <a role="button"
                 onclick="window.tweetSearchTerm(); event.preventDefault();"
                 data-commit-message="${data.subject}"
@@ -259,7 +258,7 @@ search.addWidgets([
     container: '#current-refinements',
     cssClasses: {
       list: 'list-unstyled',
-      item: 'h5 badge badge-dark mr-2 px-2',
+      item: 'h5 badge bg-dark me-2 px-2',
       delete: 'btn btn-sm btn-link text-decoration-none p-0 px-2',
     },
     transformItems: (items) => {
@@ -291,8 +290,8 @@ search.addWidgets([
       list: 'list-unstyled',
       label: 'text-white',
       link: 'text-decoration-none',
-      count: 'badge text-dark-2 ml-2',
-      selectedItem: 'pl-3',
+      count: 'badge text-dark-2 ms-2',
+      selectedItem: 'ps-3',
     },
   }),
   toggleRefinement({
@@ -303,8 +302,8 @@ search.addWidgets([
       labelText: () => 'Exclude',
     },
     cssClasses: {
-      label: 'd-flex align-items-center',
-      checkbox: 'mr-2',
+      label: 'd-flex mb-2 align-items-center',
+      checkbox: 'me-2',
     },
   }),
   refinementList({
@@ -321,9 +320,9 @@ search.addWidgets([
       searchableReset: 'd-none',
       showMore: 'btn btn-secondary btn-sm',
       list: 'list-unstyled',
-      count: 'badge text-dark-2 ml-2',
+      count: 'badge text-dark-2 ms-2',
       label: 'd-flex align-items-center',
-      checkbox: 'mr-2',
+      checkbox: 'me-2',
     },
   }),
   refinementList({
@@ -340,9 +339,9 @@ search.addWidgets([
       searchableReset: 'd-none',
       showMore: 'btn btn-secondary btn-sm align-content-center',
       list: 'list-unstyled',
-      count: 'badge text-dark-2 ml-2',
+      count: 'badge text-dark-2 ms-2',
       label: 'd-flex align-items-center',
-      checkbox: 'mr-2',
+      checkbox: 'me-2',
     },
   }),
   refinementList({
@@ -359,9 +358,9 @@ search.addWidgets([
       searchableReset: 'd-none',
       showMore: 'btn btn-secondary btn-sm',
       list: 'list-unstyled',
-      count: 'badge text-dark-2 ml-2',
+      count: 'badge text-dark-2 ms-2',
       label: 'd-flex align-items-center',
-      checkbox: 'mr-2',
+      checkbox: 'me-2',
     },
   }),
   refinementList({
@@ -378,9 +377,9 @@ search.addWidgets([
       searchableReset: 'd-none',
       showMore: 'btn btn-secondary btn-sm',
       list: 'list-unstyled',
-      count: 'badge text-dark-2 ml-2',
+      count: 'badge text-dark-2 ms-2',
       label: 'd-flex align-items-center',
-      checkbox: 'mr-2',
+      checkbox: 'me-2',
     },
   }),
   rangeInput({
@@ -390,7 +389,7 @@ search.addWidgets([
       form: 'form',
       input: 'form-control form-control-sm form-control-secondary',
       submit:
-        'btn btn-sm btn-secondary ml-2 border border-secondary border-width-2',
+        'btn btn-sm btn-secondary ms-2 border border-secondary border-width-2',
       separator: 'text-muted mx-2',
     },
   }),
@@ -401,7 +400,7 @@ search.addWidgets([
       form: 'form',
       input: 'form-control form-control-sm form-control-secondary',
       submit:
-        'btn btn-sm btn-secondary ml-2 border border-secondary border-width-2',
+        'btn btn-sm btn-secondary ms-2 border border-secondary border-width-2',
       separator: 'text-muted mx-2',
     },
   }),
@@ -412,7 +411,7 @@ search.addWidgets([
       form: 'form',
       input: 'form-control form-control-sm form-control-secondary',
       submit:
-        'btn btn-sm btn-secondary ml-2 border border-secondary border-width-2',
+        'btn btn-sm btn-secondary ms-2 border border-secondary border-width-2',
       separator: 'text-muted mx-2',
     },
   }),
@@ -429,7 +428,7 @@ search.addWidgets([
       },
     ],
     cssClasses: {
-      select: 'custom-select custom-select-sm',
+      select: 'form-select form-select-sm',
     },
   }),
 ]);
