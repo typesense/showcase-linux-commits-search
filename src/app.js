@@ -11,7 +11,6 @@ import {
   infiniteHits,
   configure,
   stats,
-  analytics,
   refinementList,
   menu,
   sortBy,
@@ -21,7 +20,6 @@ import {
 } from 'instantsearch.js/es/widgets';
 import TypesenseInstantSearchAdapter from 'typesense-instantsearch-adapter';
 import { SearchClient as TypesenseSearchClient } from 'typesense'; // To get the total number of docs
-import images from '../images/*.*';
 import STOP_WORDS from './utils/stop_words.json';
 import { history } from 'instantsearch.js/es/lib/routers';
 

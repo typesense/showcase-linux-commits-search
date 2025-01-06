@@ -16,13 +16,18 @@
     "clearCDNCache": "aws cloudfront create-invalidation --distribution-id E1595BXBL5OB6C --paths \"/*\" --profile typesense"
   },
   "devDependencies": {
+    "@parcel/packager-raw-url": "2.13.3",
+    "@parcel/transformer-sass": "2.13.3",
+    "@parcel/transformer-webmanifest": "2.13.3",
     "babel-eslint": "10.1.0",
+    "buffer": "^5.5.0||^6.0.0",
     "eslint": "9.17.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-prettier": "5.2.1",
-    "parcel-bundler": "1.12.5",
+    "parcel": "^2.13.3",
     "prettier": "3.4.2",
+    "process": "^0.11.10",
     "sass": "^1.32.12"
   },
   "dependencies": {
