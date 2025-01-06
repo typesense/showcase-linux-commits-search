@@ -23,6 +23,7 @@ import TypesenseInstantSearchAdapter from 'typesense-instantsearch-adapter';
 import { SearchClient as TypesenseSearchClient } from 'typesense'; // To get the total number of docs
 import images from '../images/*.*';
 import STOP_WORDS from './utils/stop_words.json';
+import { history } from 'instantsearch.js/es/lib/routers';
 
 let TYPESENSE_SERVER_CONFIG = {
   apiKey: process.env.TYPESENSE_SEARCH_ONLY_API_KEY, // Be sure to use an API key that only allows searches, in production
@@ -115,11 +116,11 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   //  So you can pass any parameters supported by the search endpoint below.
   //  queryBy is required.
   additionalSearchParameters: {
-    queryBy: 'subject,body',
-    queryByWeights: '1,1',
-    dropTokensThreshold: 2,
-    typoTokensThreshold: 2,
-    numTypos: 1,
+    query_by: 'subject,body',
+    query_by_weights: '1,1',
+    drop_tokens_threshold: 2,
+    typo_tokens_threshold: 2,
+    num_typos: 1,
   },
 });
 const searchClient = typesenseInstantsearchAdapter.searchClient;
@@ -127,8 +128,30 @@ const searchClient = typesenseInstantsearchAdapter.searchClient;
 const search = instantsearch({
   searchClient,
   indexName: INDEX_NAME,
-  routing: true,
+  routing: {
+    router: history({ cleanUrlOnDispose: true }),
+  },
+  future: {
+    preserveSharedStateOnUnmount: true,
+  },
 });
+
+const analyticsMiddleware = () => {
+  return {
+    onStateChange() {
+      window.ga(
+        'set',
+        'page',
+        (window.location.pathname + window.location.search).toLowerCase()
+      );
+      window.ga('send', 'pageView');
+    },
+    subscribe() {},
+    unsubscribe() {},
+  };
+};
+
+search.use(analyticsMiddleware);
 
 search.addWidgets([
   searchBox({
@@ -144,17 +167,6 @@ search.addWidgets([
     queryHook(query, search) {
       const modifiedQuery = queryWithoutStopWords(query);
       search(modifiedQuery);
-    },
-  }),
-
-  analytics({
-    pushFunction(formattedParameters, state, results) {
-      window.ga(
-        'set',
-        'page',
-        (window.location.pathname + window.location.search).toLowerCase()
-      );
-      window.ga('send', 'pageView');
     },
   }),
 
@@ -225,9 +237,9 @@ search.addWidgets([
             </div>
         `;
       },
-      empty:
-        'No commits found for <q>{{ query }}</q>. Try another search term.',
-      showMoreText: 'Show more commits',
+      empty: (data, { html }) =>
+        html`No commits found for <q>${data.query}</q>. Try another search term.`,
+      showMoreText: () => `Show more commits`,
     },
     transformItems: (items) => {
       return items.map((item) => {
@@ -290,7 +302,7 @@ search.addWidgets([
     attribute: 'is_merge',
     on: 'false',
     templates: {
-      labelText: 'Exclude',
+      labelText: () => 'Exclude',
     },
     cssClasses: {
       label: 'd-flex align-items-center',
