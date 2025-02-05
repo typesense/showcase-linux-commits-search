@@ -1,18 +1,21 @@
+@use 'sass:color';
+
 @import url('https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap');
 
-$primary: #55DE5C;
-$secondary: #C7C402;
+$primary: #55de5c;
+$secondary: #c7c402;
 $gray-100: #e8e8e8;
 $gray-200: #d1d1d1;
 $gray-300: #bbbbbb;
 $gray-400: #a4a4a4;
-$gray-500: #8D8D8D;
+$gray-500: #8d8d8d;
 $gray-600: #717171;
 $gray-700: #555555;
 $gray-800: #383838;
 $gray-900: #1c1c1c;
+$dark: $gray-800;
 $black: #090909;
-$white: #E8E8E8;
+$white: #e8e8e8;
 
 $text-muted: $gray-500;
 
@@ -26,8 +29,17 @@ $input-font-weight: 400;
 $input-color: $primary;
 $input-bg: $black;
 $input-border-color: $primary;
-$input-focus-border-color: darken($primary, 5%);
-$input-btn-focus-box-shadow:  0 0 15px 0.2em rgba($input-focus-border-color, 0.25);
+$input-focus-border-color: color.adjust($primary, $lightness: -5%, $space: hsl);
+$input-btn-focus-box-shadow: 0 0 15px 0.2em
+  rgba($input-focus-border-color, 0.25);
+
+$form-select-focus-box-shadow: 0 0 0 0.2rem rgba($secondary, 0.5);
+$form-select-indicator-padding: 2.5rem;
+$form-select-bg-size: 12px 9px;
+$form-select-bg: $gray-900;
+$form-select-border-width: 0px;
+$form-select-color: $gray-300;
+$form-select-padding-y-sm: 0.45rem;
 
 $component-active-bg: $secondary;
 $custom-select-color: $gray-300;
@@ -37,7 +49,7 @@ $input-btn-padding-x-sm: 0.9rem;
 $input-btn-padding-y-sm: 0.4rem;
 
 $input-padding-x: 1.3rem;
-$input-padding-y: .8rem;
+$input-padding-y: 0.8rem;
 
 $font-family-sans-serif: 'Fira Mono', monospace;
 $font-size-base: 0.85rem;
@@ -60,13 +72,16 @@ $badge-padding-y: 0.75em;
 $enable-rounded: false;
 $enable-responsive-font-sizes: true;
 
-@import "~bootstrap/scss/bootstrap";
+//https://stackoverflow.com/questions/65170317/sass-scss-bootstrap-5-color-functions-not-working-well
+$min-contrast-ratio: 3;
+
+@import '~bootstrap/scss/bootstrap';
 
 .font-letter-spacing-tight {
   letter-spacing: -0.05rem;
 }
 
-input[type=search] {
+input[type='search'] {
   letter-spacing: -0.05em;
 }
 

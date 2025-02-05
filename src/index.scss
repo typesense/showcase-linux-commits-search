@@ -1,5 +1,7 @@
-@import 'bootstrap';
-@import 'app';
+@use 'sass:color';
+
+@use 'bootstrap' as bs;
+@use 'app';
 
 body * {
   //border: 1px solid red;
@@ -21,15 +23,18 @@ body * {
 a.clickable-search-term {
   color: unset;
   text-decoration-line: underline;
-  text-decoration-color: $gray-500;
+  text-decoration-color: bs.$gray-500;
   -webkit-text-decoration-line: underline;
-  -webkit-text-decoration-color: $gray-500;
+  -webkit-text-decoration-color: bs.$gray-500;
   cursor: pointer;
 }
 
 mark {
   color: unset;
-  background-color: rgba(darken($secondary, 5%), .7);
+  background-color: rgba(
+    color.adjust(bs.$secondary, $lightness: -5%, $space: hsl),
+    0.7
+  );
   padding: 0 0.08em;
 }
 
@@ -40,7 +45,8 @@ mark {
 }
 
 @media (max-width: 1200px) {
-  h1, .h1 {
+  h1,
+  .h1 {
     font-size: calc(1.6rem + 1.2vw);
   }
 }
@@ -51,4 +57,18 @@ mark {
 
 .ais-RefinementList-searchBox {
   max-width: 250px;
+}
+
+.text-muted {
+  color: bs.$gray-500 !important;
+}
+small,
+.small {
+  font-size: 80% !important;
+}
+input::placeholder {
+  color: bs.$text-muted !important;
+}
+.navbar-toggler:focus {
+  box-shadow: none !important;
 }

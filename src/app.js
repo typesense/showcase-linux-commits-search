@@ -2,7 +2,6 @@ import jQuery from 'jquery';
 
 window.$ = jQuery; // workaround for https://github.com/parcel-bundler/parcel/issues/333
 
-import 'popper.js';
 import 'bootstrap';
 
 import instantsearch from 'instantsearch.js/es';
@@ -11,7 +10,6 @@ import {
   infiniteHits,
   configure,
   stats,
-  analytics,
   refinementList,
   menu,
   sortBy,
@@ -21,8 +19,8 @@ import {
 } from 'instantsearch.js/es/widgets';
 import TypesenseInstantSearchAdapter from 'typesense-instantsearch-adapter';
 import { SearchClient as TypesenseSearchClient } from 'typesense'; // To get the total number of docs
-import images from '../images/*.*';
 import STOP_WORDS from './utils/stop_words.json';
+import { history } from 'instantsearch.js/es/lib/routers';
 
 let TYPESENSE_SERVER_CONFIG = {
   apiKey: process.env.TYPESENSE_SEARCH_ONLY_API_KEY, // Be sure to use an API key that only allows searches, in production
@@ -115,11 +113,11 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   //  So you can pass any parameters supported by the search endpoint below.
   //  queryBy is required.
   additionalSearchParameters: {
-    queryBy: 'subject,body',
-    queryByWeights: '1,1',
-    dropTokensThreshold: 2,
-    typoTokensThreshold: 2,
-    numTypos: 1,
+    query_by: 'subject,body',
+    query_by_weights: '1,1',
+    drop_tokens_threshold: 2,
+    typo_tokens_threshold: 2,
+    num_typos: 1,
   },
 });
 const searchClient = typesenseInstantsearchAdapter.searchClient;
@@ -127,8 +125,30 @@ const searchClient = typesenseInstantsearchAdapter.searchClient;
 const search = instantsearch({
   searchClient,
   indexName: INDEX_NAME,
-  routing: true,
+  routing: {
+    router: history({ cleanUrlOnDispose: true }),
+  },
+  future: {
+    preserveSharedStateOnUnmount: true,
+  },
 });
+
+const analyticsMiddleware = () => {
+  return {
+    onStateChange() {
+      window.ga(
+        'set',
+        'page',
+        (window.location.pathname + window.location.search).toLowerCase()
+      );
+      window.ga('send', 'pageView');
+    },
+    subscribe() {},
+    unsubscribe() {},
+  };
+};
+
+search.use(analyticsMiddleware);
 
 search.addWidgets([
   searchBox({
@@ -144,17 +164,6 @@ search.addWidgets([
     queryHook(query, search) {
       const modifiedQuery = queryWithoutStopWords(query);
       search(modifiedQuery);
-    },
-  }),
-
-  analytics({
-    pushFunction(formattedParameters, state, results) {
-      window.ga(
-        'set',
-        'page',
-        (window.location.pathname + window.location.search).toLowerCase()
-      );
-      window.ga('send', 'pageView');
     },
   }),
 
@@ -196,7 +205,7 @@ search.addWidgets([
                   ${data._highlightResult.subject.value}
                 </h6>
               </div>
-              <div class="col-1 text-right my-2 my-md-0">
+              <div class="col-1 text-end my-2 my-md-0">
                 <a role="button"
                 onclick="window.tweetSearchTerm(); event.preventDefault();"
                 data-commit-message="${data.subject}"
@@ -225,9 +234,9 @@ search.addWidgets([
             </div>
         `;
       },
-      empty:
-        'No commits found for <q>{{ query }}</q>. Try another search term.',
-      showMoreText: 'Show more commits',
+      empty: (data, { html }) =>
+        html`No commits found for <q>${data.query}</q>. Try another search term.`,
+      showMoreText: () => `Show more commits`,
     },
     transformItems: (items) => {
       return items.map((item) => {
@@ -249,7 +258,7 @@ search.addWidgets([
     container: '#current-refinements',
     cssClasses: {
       list: 'list-unstyled',
-      item: 'h5 badge badge-dark mr-2 px-2',
+      item: 'h5 badge bg-dark me-2 px-2',
       delete: 'btn btn-sm btn-link text-decoration-none p-0 px-2',
     },
     transformItems: (items) => {
@@ -281,8 +290,8 @@ search.addWidgets([
       list: 'list-unstyled',
       label: 'text-white',
       link: 'text-decoration-none',
-      count: 'badge text-dark-2 ml-2',
-      selectedItem: 'pl-3',
+      count: 'badge text-dark-2 ms-2',
+      selectedItem: 'ps-3',
     },
   }),
   toggleRefinement({
@@ -290,11 +299,11 @@ search.addWidgets([
     attribute: 'is_merge',
     on: 'false',
     templates: {
-      labelText: 'Exclude',
+      labelText: () => 'Exclude',
     },
     cssClasses: {
-      label: 'd-flex align-items-center',
-      checkbox: 'mr-2',
+      label: 'd-flex mb-2 align-items-center',
+      checkbox: 'me-2',
     },
   }),
   refinementList({
@@ -311,9 +320,9 @@ search.addWidgets([
       searchableReset: 'd-none',
       showMore: 'btn btn-secondary btn-sm',
       list: 'list-unstyled',
-      count: 'badge text-dark-2 ml-2',
+      count: 'badge text-dark-2 ms-2',
       label: 'd-flex align-items-center',
-      checkbox: 'mr-2',
+      checkbox: 'me-2',
     },
   }),
   refinementList({
@@ -330,9 +339,9 @@ search.addWidgets([
       searchableReset: 'd-none',
       showMore: 'btn btn-secondary btn-sm align-content-center',
       list: 'list-unstyled',
-      count: 'badge text-dark-2 ml-2',
+      count: 'badge text-dark-2 ms-2',
       label: 'd-flex align-items-center',
-      checkbox: 'mr-2',
+      checkbox: 'me-2',
     },
   }),
   refinementList({
@@ -349,9 +358,9 @@ search.addWidgets([
       searchableReset: 'd-none',
       showMore: 'btn btn-secondary btn-sm',
       list: 'list-unstyled',
-      count: 'badge text-dark-2 ml-2',
+      count: 'badge text-dark-2 ms-2',
       label: 'd-flex align-items-center',
-      checkbox: 'mr-2',
+      checkbox: 'me-2',
     },
   }),
   refinementList({
@@ -368,9 +377,9 @@ search.addWidgets([
       searchableReset: 'd-none',
       showMore: 'btn btn-secondary btn-sm',
       list: 'list-unstyled',
-      count: 'badge text-dark-2 ml-2',
+      count: 'badge text-dark-2 ms-2',
       label: 'd-flex align-items-center',
-      checkbox: 'mr-2',
+      checkbox: 'me-2',
     },
   }),
   rangeInput({
@@ -380,7 +389,7 @@ search.addWidgets([
       form: 'form',
       input: 'form-control form-control-sm form-control-secondary',
       submit:
-        'btn btn-sm btn-secondary ml-2 border border-secondary border-width-2',
+        'btn btn-sm btn-secondary ms-2 border border-secondary border-width-2',
       separator: 'text-muted mx-2',
     },
   }),
@@ -391,7 +400,7 @@ search.addWidgets([
       form: 'form',
       input: 'form-control form-control-sm form-control-secondary',
       submit:
-        'btn btn-sm btn-secondary ml-2 border border-secondary border-width-2',
+        'btn btn-sm btn-secondary ms-2 border border-secondary border-width-2',
       separator: 'text-muted mx-2',
     },
   }),
@@ -402,7 +411,7 @@ search.addWidgets([
       form: 'form',
       input: 'form-control form-control-sm form-control-secondary',
       submit:
-        'btn btn-sm btn-secondary ml-2 border border-secondary border-width-2',
+        'btn btn-sm btn-secondary ms-2 border border-secondary border-width-2',
       separator: 'text-muted mx-2',
     },
   }),
@@ -419,7 +428,7 @@ search.addWidgets([
       },
     ],
     cssClasses: {
-      select: 'custom-select custom-select-sm',
+      select: 'form-select form-select-sm',
     },
   }),
 ]);
